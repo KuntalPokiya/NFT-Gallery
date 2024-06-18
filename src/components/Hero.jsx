@@ -43,8 +43,14 @@ const Hero =()=>{
                 src={imgHero} 
                 alt="Hero"
             />
-            <div>
-                <Identicon string={'0x21...786a'} size={50}/>
+            <div className='flex justify-start items-center p-3'>
+                <Identicon 
+                className='h-10 w-10 object-contain rounded-full mr-3'
+                string={'0x21...786a'} size={50}/>
+                <div>
+                    <p className='text-white font-semibold'>0x21...786a</p>
+                    <small className='text-[#bd255f] font-bold '>@you</small>
+                </div>
             </div>
         </div>
     </div>
