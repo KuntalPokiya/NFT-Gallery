@@ -15,6 +15,12 @@ export const Artworks = () => {
                     <Card key={i} nft={i + 1}/>
                 ))}
             </div>
+            <div className='text-center my-5'>
+            <button className='shadow-lg shadow-black text-white text-sm
+             bg-[#e32970] hover:bg-[#bd255f] cursor-pointer rounded-full p-2'>
+                Load More 
+            </button>
+            </div>
         </div>
     </div>
   )
