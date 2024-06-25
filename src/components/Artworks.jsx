@@ -1,4 +1,5 @@
 import React from 'react'
+import { setGlobalState } from '../store';
 const imgHero='https://images.cointelegraph.com/images/1434_aHR0cHM6Ly9zMy5jb2ludGVsZWdyYXBoLmNvbS91cGxvYWRzLzIwMjEtMDYvNGE4NmNmOWQtODM2Mi00YmVhLThiMzctZDEyODAxNjUxZTE1LmpwZWc=.jpg';
 
 export const Artworks = () => {
@@ -47,7 +48,8 @@ const Card=({nft})=>(
                 </p>
             </div>
             <button className='shadow-lg shadow-black text-sm
-             bg-[#e32970] hover:bg-[#bd255f] cursor-pointer rounded-full px-1.5 py-1'>
+             bg-[#e32970] hover:bg-[#bd255f] cursor-pointer rounded-full px-1.5 py-1'
+             onClick={()=> setGlobalState('showModal','scale-100')}>
                 View Details 
             </button>
         </div>

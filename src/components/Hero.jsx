@@ -1,6 +1,7 @@
 import React from 'react'
 const imgHero='https://images.cointelegraph.com/images/1434_aHR0cHM6Ly9zMy5jb2ludGVsZWdyYXBoLmNvbS91cGxvYWRzLzIwMjEtMDYvNGE4NmNmOWQtODM2Mi00YmVhLThiMzctZDEyODAxNjUxZTE1LmpwZWc=.jpg';
 import Identicon  from 'react-identicons'
+import { setGlobalState} from '../store'
 
 const Hero =()=>{
   return (
@@ -18,7 +19,11 @@ const Hero =()=>{
                         </p>
             </div>
             <div className='fles mt-5'>
-                <button className='shadow-xl shadow-black text-white bg-[#e32970] hover:bg-[#bd255f] md:text-s p-2 rounded-full md:justify-center mx-12'>Create NFT</button>
+                <button className='shadow-xl shadow-black text-white bg-[#e32970]
+                         hover:bg-[#bd255f] md:text-s p-2 rounded-full md:justify-center
+                          mx-12' onClick={()=> setGlobalState('modal','scale-100')}>
+                            Create NFT
+                </button>
             </div>
             <div className='w-3/4 justify-between items-center mt-5 flex flex-row'>
             <div className='text-white items-center mx-auto '>

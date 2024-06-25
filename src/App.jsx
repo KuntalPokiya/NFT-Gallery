@@ -3,6 +3,7 @@ import { CreateNFT } from "./components/CreateNFT"
 import Footer from "./components/Footer"
 import Header from "./components/Header"
 import Hero from "./components/Hero"
+import ShowNFT from "./components/ShowNFT"
 import Transaction from "./components/Transaction"
 
 const App = () => {
@@ -16,6 +17,7 @@ const App = () => {
       <Transaction />
       <Footer />
       <CreateNFT />
+      <ShowNFT />
     </div>
   )
 }
