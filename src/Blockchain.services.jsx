@@ -65,8 +65,25 @@ const isWallectConnected = async () => {
   }
 }
 
+const mintNFT = async ({ title, description, metadataURI, price }) => {
+  try {
+    price = window.web3.utils.toWei(price.toString(), 'ether')
+    const contract = await getEtheriumContract()
+    const account = getGlobalState('connectedAccount')
+    const mintPrice = window.web3.utils.toWei('0.01', 'ether')
+
+    await contract.methods
+      .payToMint(title, description, metadataURI, price)
+      .send({ from: account, value: mintPrice })
+
+    return true
+  } catch (error) {
+    reportError(error)
+  }
+}
 
 export {
   connectWallet,
   isWallectConnected,
+  mintNFT
 }

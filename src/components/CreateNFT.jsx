@@ -2,6 +2,20 @@ import React, { useState } from 'react'
 import {FaTimes} from 'react-icons/fa'
 import CreateNFTimg from '../assets/CreateNFTimg.png'
 import { setGlobalState, useGlobalState } from '../store'
+import {create} from 'ipfs-http-client'
+
+const auth='Basic'+Buffer.from(
+  process.env.REACT_APP_INFURIA_PID + ':' + process.env.REACT_APP_INFURIA_API,
+  ).toString('base64')
+
+  const client = create({
+    host: 'ipfs.infura.io',
+    port: 5001,
+    protocol: 'https',
+    headers: {
+      authorization: auth,
+    },
+  })
 
 export const CreateNFT = () => {
   const [modal]=useGlobalState('modal')
@@ -11,13 +25,30 @@ export const CreateNFT = () => {
   const [fileURL,setFileURL]= useState('')
   const [imgBase64,setImgBase64]= useState(null)
 
-  const handleSubmit=(e)=>{
+  const handleSubmit=async(e)=>{
     e.preventDefault()
 
     if(!title || !description || !price ) return
+    setGlobalState('modal','scale-0')
+    setGlobalState('loading',{show:true,msg:'Uploading to IPFS...'})
 
-    console.log('Minted...')
+    try {
+      const created=await client.add(fileURL)
+    } catch (error) {
+      
+    }
+
     closeModal()
+  }
+
+  const changeImage=async(e)=>{
+    const reader=new FileReader()
+    if(e.target.files[0]) reader.readAsDataURL(e.target.files[0])
+      reader.onload=(readerEvent)=>{
+        const file=readerEvent.target.result
+        setImgBase64(file)
+        setFileURL(e.target.files[0])
+      }
   }
 
   const closeModal=()=>{
@@ -56,7 +87,7 @@ export const CreateNFT = () => {
                 </div>
               </div>
               <div className='flex justify-between items-center bg-gray-800 
-                    rounded-xl mt-0'>
+                    rounded-xl mt-3'>
                 <label className='block'> 
                   <span className='sr-only'>Choose Profile Photo</span>
                   <input type="file" 
@@ -65,7 +96,7 @@ export const CreateNFT = () => {
                             cursor-pointer file:border-0 file:text-sm file:font-semibold
                             hover:file:bg-[#e32970] hover:file:text-white hover:file:cursor-pointer focus:outline-none
                             focus:ring-0' 
-                  //onChange={}
+                  onChange={changeImage}
                   required
                   />
                 </label>
