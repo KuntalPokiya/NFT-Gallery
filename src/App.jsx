@@ -9,11 +9,12 @@ import Loading from "./components/Loading"
 import ShowNFT from "./components/ShowNFT"
 import Transaction from "./components/Transaction"
 import UpdateNFT from "./components/UpdateNFT"
-import { isWallectConnected } from "./Blockchain.services"
+import { getAllNFTs, isWallectConnected } from "./Blockchain.services"
 
 const App = () => {
   useEffect(async()=>{
     await isWallectConnected() // will check whether account is connected or not
+    await getAllNFTs()
   },[])
   return (
     <div className="min-h-screen">

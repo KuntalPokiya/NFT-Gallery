@@ -81,8 +81,40 @@ const mintNFT = async ({ title, description, metadataURI, price }) => {
     reportError(error)
   }
 }
+
+const getAllNFTs=async()=>{
+  try {
+      if (!ethereum) return reportError('Please install Metamask')
+      const contract = await getEtheriumContract()
+      const nfts=await contract.metods.getAllNFTs().call()
+      const transactions=await contract.metods.getAllTransactions().call()
+
+       setGlobalState('nfts',structuredNFTS(nfts))
+       setGlobalState('transactions',structuredNFTS(transactions))
+      // console.log(structuredNFTS(nfts));
+  } catch (error) {
+   
+  }
+}
+
+const structuredNFTS=(nfts)=>{ 
+   return nfts
+   .map((nft)=>({
+      id: Number(nft.id),
+      owner: nft.owner.toLowerCase(),
+      cost: window.web3.utils.fromWei(nft.cost),
+      title:nft.title,
+      description:nft.description,
+      metadataURI:nft.metadataURI,
+      timestamp:nft.timestamp
+   }))
+   .reverse()  //we wanted to show last minted nft to be first
+  }
+
 export {
   connectWallet,
   isWallectConnected,
-  mintNFT
+  mintNFT,
+  getAllNFTs,
+ structuredNFTS
 }

@@ -1,8 +1,9 @@
 import React from 'react'
-import { setGlobalState } from '../store';
+import { setGlobalState, useGlobalState } from '../store';
 const imgHero='https://images.cointelegraph.com/images/1434_aHR0cHM6Ly9zMy5jb2ludGVsZWdyYXBoLmNvbS91cGxvYWRzLzIwMjEtMDYvNGE4NmNmOWQtODM2Mi00YmVhLThiMzctZDEyODAxNjUxZTE1LmpwZWc=.jpg';
 
 export const Artworks = () => {
+    const [nfts]=useGlobalState('nfts')
   return (
     <div className='bg-[#151c25] gradient-bg-artworks'>
         <div className='w-4/5 py-10 mx-12'>
@@ -12,8 +13,8 @@ export const Artworks = () => {
             </h4>
             <div className='grid grid-cols-1 md:grid-cols-3 lg-grid-cols-4 
                     gap-6 md:gap-4 lg:gap-6 py-2.5'>
-                {Array(4).fill().map((nft,i)=>(
-                    <Card key={i} nft={i + 1}/>
+                {nfts.map((nft,i)=>(
+                    <Card key={i} nft={nft}/>
                 ))}
             </div>
             <div className='text-center my-5'>
@@ -32,19 +33,17 @@ const Card=({nft})=>(
             bg-gray-800 my-2 p-3'>
         <img 
             className=' w-full object-cover shadow-lg shadow-black rounded-lg mb-3'
-            src={imgHero} alt={"NFT Image"} />
-        <h4 className='text-white font-semibold'>NFT #{nft}</h4>
+            src={nft.metadataURI} alt={nft.title} />
+        <h4 className='text-white font-semibold'>{nft.title}</h4>
         <p className='text-gray-400 text-sm my-1'>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, quos minima. Exercitationem, natus illo tempora sint nam, cumque totam dolorem voluptatum, porro quia eveniet atque quos quisquam ducimus amet explicabo!
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sint hic corrupti nobis earum, repudiandae eligendi velit tempore qui soluta quam laboriosam repellat modi voluptatum accusamus rerum sapiente itaque, veritatis repellendus.
-        </p>
+            {nft.description}</p>
         <div className='flex justify-between items-center mt-3 text-white'>
             <div className='flex flex-col'>
                 <small className='text-xs'>
                     Current Price
                 </small>
                 <p className='text-sm font-semibold'>
-                    0.34 ETH
+                    {nft.cost} ETH
                 </p>
             </div>
             <button className='shadow-lg shadow-black text-sm
