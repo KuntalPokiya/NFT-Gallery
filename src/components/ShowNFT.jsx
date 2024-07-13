@@ -76,7 +76,7 @@ export const ShowNFT = () => {
                 font-semibold drop-shadow-xl border border-transparent hover:bg-transparent
                hover:text-[#e32970] hover:border hover:border-[#bd255f]  focus:outline-none focus:ring'
                onClick={onChangePrice}>
-                   Change Price 
+                   Change Price   
                </button> )
               : (<button className='flex justify-center items-center shadow-lg shadow-black text-white text-sm
                 bg-[#e32970] hover:bg-[#bd255f] cursor-pointer rounded-full px-3 py-2 mt-6 w-24 
