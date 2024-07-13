@@ -1,16 +1,18 @@
 import React, { useState } from 'react'
 import {FaTimes} from 'react-icons/fa'
 import CreateNFTimg from '../assets/CreateNFTimg.png'
-import { setGlobalState, useGlobalState } from '../store'
+import { setAlert, setGlobalState, setLoadingMsg, useGlobalState } from '../store'
 import {create} from 'ipfs-http-client'
 
-const auth='Basic'+Buffer.from(
-  process.env.REACT_APP_INFURIA_PID + ':' + process.env.REACT_APP_INFURIA_API,
+const auth=
+  'Basic'+
+  Buffer.from(
+    process.env.REACT_APP_INFURIA_PID + ':' + process.env.REACT_APP_INFURIA_API,
   ).toString('base64')
 
   const client = create({
     host: 'ipfs.infura.io',
-    port: 5001,
+    port: '5001',
     protocol: 'https',
     headers: {
       authorization: auth,
@@ -30,15 +32,22 @@ export const CreateNFT = () => {
 
     if(!title || !description || !price ) return
     setGlobalState('modal','scale-0')
-    setGlobalState('loading',{show:true,msg:'Uploading to IPFS...'})
+    setLoadingMsg('Uploading to IPFS...')
 
     try {
       const created=await client.add(fileURL)
-    } catch (error) {
-      
-    }
+      setLoadingMsg('Uploaded,approve transaction now...')
+      const metadataURI=`https://ipfs.io/ipfs/${created.path}`
+      const nft ={title,description,price,metadataURI}
+      await mintNFT(nft)
 
-    closeModal()
+      resetForm()
+      setAlert('Minting completed...')
+      window.location.reload()
+    } catch (error) {
+      console.log('Error uploading file',error);
+      setAlert('Minting failed...','red')
+    }
   }
 
   const changeImage=async(e)=>{

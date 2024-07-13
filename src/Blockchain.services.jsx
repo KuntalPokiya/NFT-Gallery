@@ -81,7 +81,6 @@ const mintNFT = async ({ title, description, metadataURI, price }) => {
     reportError(error)
   }
 }
-
 export {
   connectWallet,
   isWallectConnected,
