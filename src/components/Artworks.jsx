@@ -1,6 +1,5 @@
 import React from 'react'
 import { setGlobalState, useGlobalState } from '../store';
-const imgHero='https://images.cointelegraph.com/images/1434_aHR0cHM6Ly9zMy5jb2ludGVsZWdyYXBoLmNvbS91cGxvYWRzLzIwMjEtMDYvNGE4NmNmOWQtODM2Mi00YmVhLThiMzctZDEyODAxNjUxZTE1LmpwZWc=.jpg';
 
 export const Artworks = () => {
     const [nfts]=useGlobalState('nfts')
@@ -28,7 +27,14 @@ export const Artworks = () => {
   )
 }
 
-const Card=({nft})=>(
+const Card=({nft})=>{
+
+    const setNFT=()=>{
+        setGlobalState('nft',nft)
+        setGlobalState('showModal','scale-100')
+    }
+
+   return(
     <div className='w-full shadow-xl shadow-black rounded-md overflow-hidden
             bg-gray-800 my-2 p-3'>
         <img 
@@ -48,11 +54,12 @@ const Card=({nft})=>(
             </div>
             <button className='shadow-lg shadow-black text-sm
              bg-[#e32970] hover:bg-[#bd255f] cursor-pointer rounded-full px-1.5 py-1'
-             onClick={()=> setGlobalState('showModal','scale-100')}>
+             onClick={setNFT}>
                 View Details 
             </button>
         </div>
     </div>
-)
+   ) 
+}
 
 export default Artworks 
