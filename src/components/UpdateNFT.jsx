@@ -1,18 +1,31 @@
 import React, { useState } from 'react'
 import {FaTimes} from 'react-icons/fa'
 import CreateNFTimg from '../assets/CreateNFTimg.png'
-import { setGlobalState, useGlobalState } from '../store'
+import { setAlert, setGlobalState, setLoadingMsg, useGlobalState } from '../store'
+import { updateNFT } from '../Blockchain.services'
 
 export const UpdateNFT = () => {
   const [modal]=useGlobalState('updateModal')
-  const [price,setPrice]= useState('')
+  const [nft]=useGlobalState('nft')
+  const [price,setPrice]= useState(nft?.cost)
 
-  const handleSubmit=(e)=>{
+  const handleSubmit=async(e)=>{
     e.preventDefault()
 
-    if(!price ) return
+    if(!price || price<= 0) return
+    setGlobalState('modal','scale-0')
+    setLoadingMsg('Initialising price update...')
+    try {
+      setLoadingMsg('Price updating...')
+      setGlobalState('updateModal','scale-0')
 
-    console.log('Updated...')
+      await updateNFT({id:nft.id,cost:price})
+      setAlert('Price updates...')
+      window.location.reload()
+    } catch (error) {
+        console.log('Error updating file price');
+          setAlert('Update failed...','red')
+    }
     closeModal()
   }
 

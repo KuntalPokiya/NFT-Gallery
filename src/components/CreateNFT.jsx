@@ -5,9 +5,9 @@ import { setAlert, setGlobalState, setLoadingMsg, useGlobalState } from '../stor
 import {create} from 'ipfs-http-client'
 
 const auth=
-  'Basic'+
+  'Basic '+
   Buffer.from(
-    process.env.REACT_APP_INFURIA_PID + ':' + process.env.REACT_APP_INFURIA_API,
+    '87f449a7876e4b80b76787f2e02c769a' + ':' + 'tIl56fTqWxhKm+5Kr6YKXkxJwV62SzxTqAadb6fi2V6XFFozsVG1VQ'
   ).toString('base64')
 
   const client = create({
@@ -15,8 +15,8 @@ const auth=
     port: '5001',
     protocol: 'https',
     headers: {
-      authorization: auth,
-    },
+      authorization: auth
+    }
   })
 
 export const CreateNFT = () => {

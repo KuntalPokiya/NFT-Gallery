@@ -7,14 +7,14 @@ import "./ERC721Enumerable.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract TimelessNFT is ERC721Enumerable, Ownable {
-    using Strings for uint256;
-    mapping(string => uint8) existingURIs;
+    using Strings for uint256; //library that converts uints into strings
+    mapping(string => uint8) existingURIs; // mappping of minted URIs
     mapping(uint256 => address) public holderOf;
 
     address public artist;
     uint256 public royalityFee;
     uint256 public supply = 0;
-    uint256 public totalTx = 0;
+    uint256 public totalTx = 0; //total transactions
     uint256 public cost = 0.01 ether;
 
     event Sale(

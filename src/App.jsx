@@ -13,7 +13,7 @@ import { getAllNFTs, isWallectConnected } from "./Blockchain.services"
 
 const App = () => {
   useEffect(async()=>{
-    await isWallectConnected() // will check whether account is connected or not
+    await isWallectConnected()  // will check whether account is connected or not
     await getAllNFTs()
   },[])
   return (

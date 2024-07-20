@@ -48,9 +48,9 @@ const isWallectConnected = async () => {
       window.location.reload()
     })
 
-    window.ethereum.on('accountsChanged', async () => {
+    window.ethereum.on('accountsChanged', async () => {  //events
       setGlobalState('connectedAccount', accounts[0].toLowerCase())
-      await isWallectConnected()
+      await isWallectConnected() 
     })
 
     if (accounts.length) {
@@ -69,12 +69,12 @@ const mintNFT = async ({ title, description, metadataURI, price }) => {
   try {
     price = window.web3.utils.toWei(price.toString(), 'ether')
     const contract = await getEtheriumContract()
-    const account = getGlobalState('connectedAccount')
+    const connectedAccount = getGlobalState('connectedAccount')
     const mintPrice = window.web3.utils.toWei('0.01', 'ether')
 
     await contract.methods
       .payToMint(title, description, metadataURI, price)
-      .send({ from: account, value: mintPrice })
+      .send({ from: connectedAccount, value: mintPrice })
 
     return true
   } catch (error) {
@@ -111,10 +111,23 @@ const structuredNFTS=(nfts)=>{
    .reverse()  //we wanted to show last minted nft to be first
   }
 
+  const updateNFT = async ({ id, cost }) => {
+    try {
+      cost = window.web3.utils.toWei(cost.toString(), 'ether')
+      const contract = await getEtheriumContract()
+      const buyer = getGlobalState('connectedAccount')
+  
+      await contract.methods.changePrice(Number(id), cost).send({ from: buyer })
+    } catch (error) {
+       
+    }
+  }
+
 export {
   connectWallet,
   isWallectConnected,
   mintNFT,
   getAllNFTs,
- structuredNFTS
+ structuredNFTS,
+ updateNFT
 }
